@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/NYTimes/gziphandler"
+	"github.com/rs/cors"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"net/http"
 )
@@ -36,6 +37,8 @@ func NewHandler(options ...HandlerOption) (*Handler, error) {
 		mux:         http.NewServeMux(),
 		middlewares: make([]func(http.Handler) http.Handler, 0),
 	}
+
+	handler.middlewares = append(handler.middlewares, cors.AllowAll().Handler)
 
 	handler.middlewares = append(handler.middlewares, gziphandler.GzipHandler)
 

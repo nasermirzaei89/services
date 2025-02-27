@@ -2,8 +2,8 @@
 ROOT=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 CGO_ENABLED?=0
 
-GOLANGCI_LINT_CMD=go run github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.5
-TAGALIGN_CMD=go run github.com/4meepo/tagalign/cmd/tagalign@v1.4.2
+GOLANGCI_LINT_CMD=go tool golangci-lint
+TAGALIGN_CMD=go tool tagalign
 
 .DEFAULT_GOAL := .default
 

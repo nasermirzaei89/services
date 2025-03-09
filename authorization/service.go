@@ -171,3 +171,54 @@ func (svc *Service) AddToGroup(ctx context.Context, sub string, groups ...string
 
 	return nil
 }
+
+type RemovePolicyRequest struct {
+	Subject string
+	Domain  string
+	Object  string
+	Action  string
+}
+
+func (svc *Service) RemovePolicy(ctx context.Context, reqs ...RemovePolicyRequest) error {
+	_, span := svc.tracer.Start(ctx, "RemovePolicy")
+	defer span.End()
+
+	rules := make([][]string, 0, len(reqs))
+
+	for _, req := range reqs {
+		if req.Object == "" {
+			req.Object = ObjectNone
+		}
+
+		rules = append(rules, []string{req.Subject, req.Domain, req.Object, req.Action})
+	}
+
+	_, err := svc.enforcer.RemovePolicies(rules)
+	if err != nil {
+		span.SetStatus(codes.Error, err.Error())
+
+		return errors.Wrap(err, "failed to remove policies")
+	}
+
+	return nil
+}
+
+func (svc *Service) RemoveFromGroup(ctx context.Context, sub string, groups ...string) error {
+	_, span := svc.tracer.Start(ctx, "RemoveFromGroup")
+	defer span.End()
+
+	rules := make([][]string, 0, len(groups))
+
+	for _, group := range groups {
+		rules = append(rules, []string{sub, group})
+	}
+
+	_, err := svc.enforcer.RemoveGroupingPolicies(rules)
+	if err != nil {
+		span.SetStatus(codes.Error, err.Error())
+
+		return errors.Wrap(err, "failed to remove grouping policies")
+	}
+
+	return nil
+}

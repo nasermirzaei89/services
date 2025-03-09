@@ -7,7 +7,7 @@ TAGALIGN_CMD=go tool tagalign
 
 .DEFAULT_GOAL := .default
 
-.default: format lint test
+.default: format build lint test
 
 .PHONY: help
 help: ## Show help

@@ -13,6 +13,8 @@ linters:
     - varnamelen
     - gofumpt
     - goimports
+    - lll
+    - gochecknoglobals
 issues:
   exclude-dirs:
     - tmp

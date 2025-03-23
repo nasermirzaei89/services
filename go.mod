@@ -7,7 +7,7 @@ replace github.com/swaggo/http-swagger/v2 v2.0.2 => github.com/santouras/http-sw
 require (
 	github.com/Blank-Xu/sql-adapter v1.1.1
 	github.com/NYTimes/gziphandler v1.1.1
-	github.com/casbin/casbin/v2 v2.103.0
+	github.com/casbin/casbin/v2 v2.104.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/cors v1.11.1
 	github.com/swaggo/http-swagger/v2 v2.0.2
